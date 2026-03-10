@@ -1,0 +1,5 @@
+{
+  "name": "Press 3 Maintenance Platform",
+  "description": "UzAuto Motors Press No 3 bo'limi uchun nosozliklarni qayd qilish, texnik hujjatlar va AI yordamchi platformasi.",
+  "requestFramePermissions": ["microphone"]
+}

@@ -23,8 +23,6 @@ export default function ConfirmModal({
   cancelLabel = 'Bekor qilish',
   variant = 'danger'
 }: ConfirmModalProps) {
-  if (!isOpen) return null;
-
   const colors = {
     danger: 'bg-red-600 hover:bg-red-700 shadow-red-600/20 text-white',
     warning: 'bg-amber-600 hover:bg-amber-700 shadow-amber-600/20 text-white',
@@ -39,6 +37,7 @@ export default function ConfirmModal({
 
   return (
     <AnimatePresence>
+      {isOpen && (
       <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-[100] p-4">
         <motion.div
           initial={{ scale: 0.9, opacity: 0, y: 20 }}
@@ -77,6 +76,7 @@ export default function ConfirmModal({
           </div>
         </motion.div>
       </div>
+      )}
     </AnimatePresence>
   );
 }

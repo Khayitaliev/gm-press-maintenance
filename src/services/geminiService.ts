@@ -1,8 +1,19 @@
 import { GoogleGenAI, Modality } from "@google/genai";
 
-const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY || '' });
+let ai: any = null;
+try {
+  const apiKey = process.env.GEMINI_API_KEY;
+  if (apiKey) {
+    ai = new GoogleGenAI({ apiKey });
+  } else {
+    console.warn("GEMINI_API_KEY mavjud emas. AI xususiyatlari o'chirilgan.");
+  }
+} catch (error) {
+  console.error("AI initsializatsiyasida xatolik:", error);
+}
 
 export const getAIResponse = async (prompt: string, history: any[] = []) => {
+  if (!ai) return "Kechirasiz, AI xizmati hozircha mavjud emas (API Kalit kiritilmagan).";
   try {
     const response = await ai.models.generateContent({
       model: "gemini-3-flash-preview",
@@ -21,6 +32,10 @@ export const getAIResponse = async (prompt: string, history: any[] = []) => {
 };
 
 export const speakText = async (text: string) => {
+  if (!ai) {
+    console.warn("AI xizmati mavjud emasligi sababli audio o'qilmaydi.");
+    return;
+  }
   try {
     const response = await ai.models.generateContent({
       model: "gemini-2.5-flash-preview-tts",
